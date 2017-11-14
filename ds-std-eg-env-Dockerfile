@@ -1,0 +1,53 @@
+# FROM Default Base Environment
+
+# Install Python dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    python-dev \
+    graphviz \
+    libgraphviz-dev \
+    pkg-config \
+    unixodbc-dev \
+    libsqlite3-dev \
+    libreadline-dev \
+    gfortran \
+    libcurl4-openssl-dev && \
+    pip install -U setuptools==29.0.1 && \
+    pip install -r ds-std-eg-env-requirements.txt
+
+# gemfury ds-clv package :
+RUN pip install ds-clv --extra-index-url https://pypi.fury.io/jRKHdKXuwjzb1KyTy6Ky/datasciencedotcom/
+
+# rJava
+RUN apt-get -y install default-jre && \
+    apt-get -y install default-jdk && \
+    apt-get -y install r-base && \
+    apt-get -y install r-base-dev && \
+    R CMD javareconf && \
+    apt-get -y install r-cran-rjava
+    
+# rgdal prereqs
+RUN apt-get -y install libgdal-dev && \
+    apt-get -y install libproj-dev
+
+# Install the r packages from txt file
+RUN echo ".First <- function() {options(repos = c(CRAN = 'https://cran.rstudio.com/'))}" >> /usr/lib/R/library/base/R/Rprofile && \
+    R -q -e "install.packages('devtools')" && \
+    cat ds-std-eg-env-cran.txt | awk '{system("/usr/bin/Rscript ./ds-std-eg-env-install.r "$1)}' && \
+    R -q -e "devtools::install_github('hadley/xml2')"
+
+# Install car for R
+RUN R -q -e "devtools::install_github('jyypma/nloptr')" && \
+    R -q -e "devtools::install_version('car', version = '2.1-5')"
+
+# Install pool for R
+RUN apt-get -y install libmariadb-client-lgpl-dev && \
+    R -q -e "devtools::install_github('rstudio/pool')"
+
+# Install mxnet for R
+RUN apt-get install -y build-essential git libopenblas-dev liblapack-dev libopencv-dev && \
+    git clone --recursive https://github.com/apache/incubator-mxnet.git mxnet --branch 0.11.0 && \
+    cd mxnet && \
+    make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas && \
+    make rpkg && \
+    R CMD INSTALL mxnet_current_r.tar.gz
