@@ -1,4 +1,4 @@
-# datascience-example-env
+# Standard-Environment
 A repository to house the standard DataScience.com example environment. Fully compatible with all customer onboarding, engagement, and education materials. 
 
 Python 2.7 and R 3.3.3
