@@ -73,7 +73,7 @@ gensim==2.3.0
 mmh3==2.4
 wikipedia==1.4.0
 pathlib==1.0.1
-pyyaml==3.12
+pyyaml==5.4
 six==1.10.0
 xlrd==1.1.0
 tables==3.4.2
