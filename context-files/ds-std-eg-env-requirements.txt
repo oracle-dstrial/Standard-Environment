@@ -32,7 +32,7 @@ scipy==0.19.1
 deap==1.0.2.post2
 pillow==4.2.1
 scikit-image==0.13.0
-opencv-python==3.3.0.10
+opencv-python==3.4.7.28
 h2o==3.10.4.8
 scikit-learn==0.19.0
 skater==1.0.2
