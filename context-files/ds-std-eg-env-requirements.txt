@@ -2,7 +2,7 @@ statsmodels==0.8.0
 bottleneck==1.2.1
 cython==0.26.1
 patsy==0.4.1
-dask==0.15.2
+dask==2021.10.0
 distributed==1.19.3
 line_profiler==2.0
 memory_profiler==0.47
