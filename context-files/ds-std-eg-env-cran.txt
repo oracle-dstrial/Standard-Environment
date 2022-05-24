@@ -20,7 +20,7 @@ RJDBC==0.2-5
 bigrquery==0.4.1
 h2o==3.14.0.3
 keras==2.0.8
-tensorflow==1.4
+tensorflow==2.6.4
 randomForest==4.6-12
 glmnet==2.0-12
 MASS==7.3-45
